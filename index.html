@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO - Lista de Tarefas</title>
+    <style>
+        *,
+        :after,
+        :before {
+            box-sizing:border-box
+        }
+
+        html {
+            font-family:sans-serif;
+            font-size:1rem;
+            color:#444;
+        }
+        
+        #app {
+            max-width:450px;
+            margin:2rem auto;
+            padding:0 1rem;
+        }
+        
+        form {
+            display:flex;
+            margin-bottom:2rem;
+        }
+
+        [type=text],
+        button {
+            display:inline-block;
+            -webkit-appearance:none;
+            padding:.5rem 1rem;
+            font-size:1rem;
+            border:2px solid #ccc;
+            border-radius:4px
+        }
+        
+        button {
+            cursor:pointer;
+            background:#007bff;
+            color:#fff;
+            border:2px solid #007bff;
+            margin:0 .5rem
+        }
+
+        .btn-danger{
+            background: red;
+            border: 2px solid red;
+        }
+
+        [type=text] {
+            width:100%
+        }
+
+        [type=text]:active,
+        [type=text]:focus {
+            outline:0;
+            border:2px solid #007bff
+        }
+
+        [type=checkbox] {
+            margin-right:1rem;
+            font-size:2rem;
+            transform: scale(2);
+        }
+
+        h1 {
+            color:#222
+        }
+
+        ul {
+            padding:0
+        }
+
+        li {
+            display:flex;
+            align-items:center;
+            padding:1rem;
+            margin-bottom:1rem;
+            background:#f4f4f4;
+            border-radius:4px
+        }
+
+        li span {
+            display:inline-block;
+            padding:.5rem;
+            width:250px;
+            border-radius:4px;
+            border:2px solid transparent
+        }
+
+        li span:hover {
+            background:rgba(179,215,255,.52)
+        }
+
+        li span:focus {
+            outline:0;
+            border:2px solid #007bff;
+            background:rgba(179,207,255,.52)
+        }
+        
+        .task-done{
+            text-decoration: line-through;
+            color: #ccc;
+        }
+
+        .task-undone{
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Lista de tarefas</h1>
+        <form>
+            <input name="task" id="task" type="text" placeholder="Digite a tarefa + Enter">
+            <button>
+                Salvar
+            </button>
+        </form>
+        <div class="row">
+            <ul class="list-items">
+
+            </ul>
+        </div>
+    </div>
+    <script>
+        const ul = document.querySelector('ul')
+        document.addEventListener('submit', formSubmit)
+        //Funcao para tratar o evento de submit do form
+        function formSubmit(evt){
+            evt.preventDefault()
+            const task = document.querySelector('#task')
+            const li = document.createElement('li')
+            const checkbox = document.createElement('input')
+            checkbox.setAttribute('type', 'checkbox')
+            checkbox.addEventListener('click', checkboxClicked)
+            const span = document.createElement('span')
+            span.contentEditable = true;
+            span.className = 'editable'
+            const itemText = document.createTextNode(task.value)
+            span.appendChild(itemText)
+            const btn = document.createElement('button')
+            btn.setAttribute('class', 'btn btn-danger delete')
+            btn.addEventListener('click', deleteItem)
+            const btnText = document.createTextNode('Excluir')
+            btn.appendChild(btnText)
+            li.appendChild(checkbox)
+            li.appendChild(span)
+            li.appendChild(btn)
+            ul.appendChild(li)
+            task.value = ''
+        }
+
+        //Excluir objeto
+        function deleteItem(evt){
+            const button = evt.target
+            button.parentNode.remove()
+        }
+
+        //Marca ou desmarca tarefa como feita
+        function checkboxClicked(evt){
+            const checkbox = evt.target
+            const span = checkbox.nextSibling
+            if (checkbox.checked === true){
+                span.setAttribute('class', 'editable task-done')
+            }else{
+                span.setAttribute('class', 'editable task-undone')
+            }
+        }
+    </script>
+</body>
+</html>

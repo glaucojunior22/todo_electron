@@ -1,0 +1,14 @@
+{
+  "name": "todo_electron",
+  "version": "1.0.0",
+  "description": "App para listar tarefas a fazer do usuário.",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Glauco Junior",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^8.0.0"
+  }
+}
